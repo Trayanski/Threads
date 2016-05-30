@@ -1,0 +1,92 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Problem3TwoThreads {
+    public static void main(String[] args) {
+
+        //Implementation
+        Threads threads = new Threads();
+        Thread thread = new Thread(threads);
+        Scanner scanner = new Scanner(System.in);
+        int newValue;
+
+        System.out.println("Enter the bounds of the two threads:");
+
+        //First thread
+        System.out.print("First thread from = ");
+        newValue = scanner.nextInt();
+        scanner.nextLine();
+        threads.setFirstBoundBeginning(newValue);
+        System.out.print("First thread to = ");
+        newValue = scanner.nextInt();
+        scanner.nextLine();
+        threads.setFirstBoundEnd(newValue);
+
+        //Second thread
+        System.out.print("Second thread from = ");
+        newValue = scanner.nextInt();
+        scanner.nextLine();
+        threads.setSecondBoundBeginning(newValue);
+        System.out.print("Second thread to = ");
+        newValue = scanner.nextInt();
+        scanner.nextLine();
+        threads.setSecondBoundEnd(newValue);
+
+        //Start
+        thread.start();
+        System.out.println("Both threads were started.");
+    }
+
+    public static class Threads implements Runnable{
+
+        private int count = 0;
+
+        private int firstCount = 0;
+        private int firstBoundBeginning = 0;
+        private int firstBoundEnd = 0;
+
+        private int secondCount = 0;
+        private int secondBoundBeginning = 0;
+        private int secondBoundEnd = 0;
+
+        public Threads(){}
+
+        public void run() {
+            try {
+                System.out.printf("\nBounds:\nFirst thread - from %d to %d;\nSecond thread - from %d to %d;\n\n"
+                        , firstBoundBeginning, firstBoundEnd, secondBoundBeginning, secondBoundEnd);
+
+                for (this.firstCount = this.firstBoundBeginning, this.secondCount = this.secondBoundBeginning;
+                     this.firstCount <= this.firstBoundEnd && this.secondCount<= this.secondBoundEnd;
+                     this.firstCount++, this.secondCount++) {
+                    Thread.sleep(1000);
+                    this.count++;
+                    System.out.println("Count: " + this.count);
+                    System.out.println("First thread - " + this.firstCount);
+                    System.out.println("Second thread - " + this.secondCount);
+                }
+            } catch (InterruptedException e) {
+                //Do nothing.
+            }
+        }
+
+        public void setFirstBoundBeginning(int bound){
+            this.firstBoundBeginning = bound;
+        }
+
+        public void setSecondBoundBeginning(int bound){
+            this.secondBoundBeginning = bound;
+        }
+
+        public void setFirstBoundEnd(int bound){
+            this.firstBoundEnd = bound;
+        }
+
+        public void setSecondBoundEnd(int bound){
+            this.secondBoundEnd = bound;
+        }
+    }
+}
+
+
