@@ -1,0 +1,53 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Problem1ThreadCount {
+    public static void main(String[] args) {
+        ThreadCount threadCount = new ThreadCount();
+        Thread t = new Thread(threadCount);
+        t.start();
+        String symbol = "";
+        System.out.println("Enter a symbol to stop the counter and to display the results or enter \"end\" to exit the program.");
+        Scanner scanner = new Scanner(System.in);
+        symbol = scanner.nextLine();
+        int count;
+        while(!symbol.equals("end")){
+            count = threadCount.getCount();
+            threadCount.zeroValueToCount();
+            t.resume();
+            System.out.printf("symbol/s: %s -> count: %d\n", symbol, count);
+
+            symbol = scanner.nextLine();
+        }
+        t.interrupt();
+    }
+
+    public static class ThreadCount implements Runnable{
+        private int count = 0;
+
+        public ThreadCount(){
+        }
+
+        public void run() {
+            try {
+                for (int i = 0; i < 1000; i++) {
+                    Thread.sleep(1000);
+                    this.count++;
+                }
+            } catch (InterruptedException e) {
+                System.out.println("I wasn't done! " + e.getMessage());
+            }
+        }
+
+        public int getCount(){
+            return this.count;
+        }
+
+        public void zeroValueToCount(){
+            this.count = 0;
+        }
+    }
+}
+
+
