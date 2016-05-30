@@ -42,9 +42,11 @@ public class Problem2TwoThreads {
 
         private int count = 0;
 
+        private int firstCount = 0;
         private int firstBoundBeginning = 0;
         private int firstBoundEnd = 0;
 
+        private int secondCount = 0;
         private int secondBoundBeginning = 0;
         private int secondBoundEnd = 0;
 
@@ -54,12 +56,12 @@ public class Problem2TwoThreads {
             try {
                 System.out.printf("\nBounds:\nFirst thread - from %d to %d;\nSecond thread - from %d to %d;\n\n"
                         , firstBoundBeginning, firstBoundEnd, secondBoundBeginning, secondBoundEnd);
-                
-                for (int i = this.firstBoundBeginning, j = this.secondBoundBeginning; 
-                     i <= this.firstBoundEnd && j<= this.secondBoundEnd; i++, j++) {
+
+                for (this.firstCount = this.firstBoundBeginning, this.secondCount = this.secondBoundBeginning;
+                     this.firstCount <= this.firstBoundEnd && this.secondCount<= this.secondBoundEnd; this.firstCount++, this.secondCount++) {
                     Thread.sleep(1000);
                     this.count++;
-                    System.out.printf("Count = %d, first position = %d, second position = %d\n", this.count, i, j);
+                    System.out.printf("Count = %d, First thread = %d, Second thread = %d\n", this.count, this.firstCount, this.secondCount);
                 }
             } catch (InterruptedException e) {
                 //Do nothing.
@@ -84,20 +86,22 @@ public class Problem2TwoThreads {
     }
 }
 
-/*
+/* Output
 Enter the bounds of the two threads:
 First thread from = 1
-First thread to = 5
+First thread to = 10
 Second thread from = 3
 Second thread to = 6
 Both threads were started.
 
 Bounds:
-First thread - from 1 to 5;
+First thread - from 1 to 10;
 Second thread - from 3 to 6;
 
-Count = 1, first position = 1, second position = 3
-Count = 2, first position = 2, second position = 4
-Count = 3, first position = 3, second position = 5
-Count = 4, first position = 4, second position = 6
+Count = 1, First thread = 1, Second thread = 3
+Count = 2, First thread = 2, Second thread = 4
+Count = 3, First thread = 3, Second thread = 5
+Count = 4, First thread = 4, Second thread = 6
+
+Process finished with exit code 0
 */
