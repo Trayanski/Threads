@@ -84,4 +84,20 @@ public class Problem2TwoThreads {
     }
 }
 
+/*
+Enter the bounds of the two threads:
+First thread from = 1
+First thread to = 5
+Second thread from = 3
+Second thread to = 6
+Both threads were started.
 
+Bounds:
+First thread - from 1 to 5;
+Second thread - from 3 to 6;
+
+Count = 1, first position = 1, second position = 3
+Count = 2, first position = 2, second position = 4
+Count = 3, first position = 3, second position = 5
+Count = 4, first position = 4, second position = 6
+*/
