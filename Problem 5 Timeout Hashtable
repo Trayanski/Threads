@@ -1,0 +1,65 @@
+package com.company;
+
+import javax.xml.crypto.Data;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
+
+public class Problem5TimeoutHashtable {
+    public static void main(String[] args) {
+        Date date = new Date();
+
+    }
+}
+
+class TimeoutHashtable{
+    Hashtable hashtable = new Hashtable();
+    HashMap<Hashtable, Date> dataBace = new HashMap<>();
+
+    public TimeoutHashtable(){
+    }
+
+    public void put(int key, String value){
+        dataBace.put((Hashtable) new Hashtable().put(key, value), new Date());
+
+        /*if (hashtable.contains(key)){
+            hashtable.remove(key);
+            hashtable.put(key, value);
+        } else{
+            hashtable.put(key, value);
+        }*/
+    }
+
+    public String get(int key){
+        if (hashtable.containsKey(key)){
+            return hashtable.get(key).toString();
+        }else {
+            return null;
+        }
+    }
+
+    public String remove(int key){
+        if (hashtable.containsKey(key)){
+            hashtable.remove(key);
+            String output = "Object with key: " + key + " was removed.";
+            return output;
+        }else {
+            return null;
+        }
+    }
+
+    public static class Threads implements Runnable {
+
+        private long start_time = System.currentTimeMillis();
+
+        public Threads() {}
+
+        public void run() {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                //Do nothing.
+            }
+        }
+    }
+}
