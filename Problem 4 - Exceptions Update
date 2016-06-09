@@ -1,0 +1,100 @@
+package com.company;
+
+import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+
+public class Problem4UpdateOfPr4Exceptions {
+    public static void main(String[] args) throws NotEnoughSpaceInListException, NoElementsToBeRemovedException {
+        Scanner scanner = new Scanner(System.in);
+        ObjectListClass objList = new ObjectListClass();
+/*
+        objList.thread.run();
+        objList.remove();
+        objList.add(1);
+        objList.add(2);
+        objList.printAllElements();
+        objList.remove();
+        objList.printAllElements();
+        objList.add(3);
+        objList.printAllElements();
+        objList.add(4);
+        objList.printAllElements();
+*/
+    }
+}
+
+class ObjectListClass{
+    List<Object> listOfObjects = new ArrayList<Object>();
+    public int BoundOfList = 2;
+
+    public ObjectListClass(){
+    }
+
+    Thread thread = new Thread() {
+        public void add(Object obj) {
+            synchronized (thread) {
+                if (listOfObjects.size() == getBound()) {
+                    try {
+                        remove();
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    listOfObjects.add(obj);
+                }
+                notify();
+            }
+        }
+
+        public void remove() {
+            synchronized (thread) {
+                if (listOfObjects.size() == 0) {
+                    try {
+                        add(new Object());
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    listOfObjects.remove(listOfObjects.get(listOfObjects.size() - 1));
+                }
+                notify();
+            }
+        }
+    };
+
+    public void printAllElements() {
+        for (Object obj : listOfObjects) {
+            System.out.println(obj);
+        }
+    }
+
+    public ObjectListClass(int boundOfList){
+        this.BoundOfList = boundOfList;
+    }
+
+    public int getBound(){
+        return this.BoundOfList;
+    }
+
+    public void setBound(int boundOfList){
+        this.BoundOfList = boundOfList;
+    }
+}
+
+class NotEnoughSpaceInListException extends Exception {
+    public NotEnoughSpaceInListException () {}
+    public NotEnoughSpaceInListException (String message) {
+        super (message);
+    }
+}
+
+class NoElementsToBeRemovedException extends Exception {
+    public NoElementsToBeRemovedException () {}
+    public NoElementsToBeRemovedException (String message) {
+        super (message);
+    }
+}
+
